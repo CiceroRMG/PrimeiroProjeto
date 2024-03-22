@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="pt-Br">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <title>Lista de Tarefas</title>
+
+</head>
+
+<body>
+
+  <header>
+    <div class="header-section">
+      <div class="logo-img">
+        <img src="/Projeto_Lista_Tarefas/Img/rocket.svg">
+      </div>
+      <div class="logo-text">
+        <h1><span class="logo-color">to</span>do</h1>
+      </div>
+    </div>
+  </header>
+  
+  <main> 
+
+    <div class="search-section">
+
+      <form class="search-form">
+
+        <input type="text" id="search" class="input-search" placeholder="Adicione uma nova tarefa" value="">
+        <label for="search" class="label-search">
+          <button class="btn-search">Criar <img src="/Projeto_Lista_Tarefas/Img/plus.svg">
+          </button>
+        </label>
+
+      </form>
+
+    </div>
+
+    <div class="task-section">
+
+      <div class="task-text">
+        <div class="task-new">
+          <h2>
+            Tarefas criadas <span class="task-new-conta">0</span>
+          </h2>
+        </div>
+        <div class="task-conclude">
+          <h2>
+            Concluidas <span class="task-conclude-conta">0</span>
+          </h2>
+        </div>
+      </div>
+
+      <section class="no-tasks-section">
+        <div class="border"></div>
+
+        <div class="no-tasks">
+          <div class="no-tasks-img">
+            <img src="/Projeto_Lista_Tarefas/Img/clipboard.svg">
+          </div>
+
+          <div class="no-tasks-text">
+            <h3>Você ainda não tem tarefas cadastradas</h3>
+            <p>Crie tarefas e organize seus itens a fazer</p>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="tasks-main">
+
+        <div class="tasks-main-text">
+
+          <form class="tasks-main-form hidden 0">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 0" value="0"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 1" id="tasks-main1">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 1" value="1"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 2" id="tasks-main2">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 2" value="2"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 3">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 3" value="3"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 4">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 4" value="4"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 5">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 5" value="5"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 6">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 6" value="6"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 7">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 7" value="7"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 8">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash 8" value="8"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+          <form class="tasks-main-form hidden 9">
+
+            <button class="btn-main un"><img src="/Projeto_Lista_Tarefas/Img/btn-not.svg"></button>
+            <button class="btn-main hidden selected"><img src="/Projeto_Lista_Tarefas/Img/btn-select.svg"></button>
+
+            <textarea class="main-input-user" rows="2" maxlength="150" disabled></textarea>
+
+            <button class="btn-trash" value="9"><img src="/Projeto_Lista_Tarefas/Img/trash.svg"></button>
+
+          </form>
+
+        </div>
+        
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <h1>Feito por <a href="https://github.com/CiceroRMG">@cicerormg</a></h1>
+  </footer>
+
+  <script src="/Projeto_Lista_Tarefas/scripts/script.js"></script>
+</body>
+
+</html>
