@@ -1,3 +1,4 @@
+//REMOVI OS COMENTÁRIOS PARA MELHORAR A VISUALIZAÇÃO DO CÓDIGO
 // let newform = document.createElement("form")
 // newform.classList.add("tasks-main-form")
 
