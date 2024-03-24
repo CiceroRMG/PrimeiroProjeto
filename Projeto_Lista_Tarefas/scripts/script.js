@@ -35,396 +35,208 @@
 // btnTrash.appendChild(btnTrashImg);
 // newform.appendChild(btnTrash);
 
-const addTextinArea = document.querySelectorAll(".main-input-user")
+// Criar a logica de que quando submete a task ela é criada -OK
+/// botar um escutador no botao - OK
+//// quando clicar no botao -OK
+////// pega o valor do input - OK
+////// se o valor for vazio, nao permite - OK
+///// coloca o valor em uma div - OK
+///// Aumenta o contador de criada
 
-let i = 0
-function createNewDiv(event) {
-  event.preventDefault()
-  const tasksMainList = document.querySelectorAll(".tasks-main-form")
-  let inputText = document.querySelector(".input-search")
-  let inputTextValue = inputText.value
+// criar funçao para selecionar a task
+//// quando clicamos no botao para selecionar
+////// verifica se o botao esta selecionado - OK
+/////// muda o texto (estilização) - OK
+/////// muda a imagem para checked - OK
+/////// aumenta o contador para +1 - OK
 
-  if(inputTextValue == ""){
-    return console.log("Escreva alguma coisa")
+/// cria função de excluir task - OK
+
+//APENAS ISSO TEM QUE ESTAR NO SCRIPT.JS --------
+const createbtn = document.querySelector(".btn-search");
+createbtn.addEventListener("click", createTask);
+// ----------------------------------------------
+
+function createTask(event) {
+  event.preventDefault();
+  const input = selectSearchInput();
+  const inputValue = input.value;
+
+  if (!inputValue) {
+    return console.log("Escreva alguma coisa");
   }
-  if(i < tasksMainList.length) {
-  while(tasksMainList[i].classList.contains("aparece")){
-    i++
-  }
-  let nullTasks = document.querySelector(".no-tasks-section")
-  nullTasks.classList.add("hidden")
-  tasksMainList[i].classList.remove('hidden')
-  tasksMainList[i].classList.add('aparece')
-  let apareceList = document.querySelectorAll(".aparece")
 
-  addTextinArea[i].innerText = inputTextValue
-  inputText.value = ""
+  const task = createTaskNode(inputValue);
 
-  i++
-  let contadorTarefas = document.querySelector(".task-new-conta")
-  contadorTarefas.innerText = `${apareceList.length}`
+  addTaskOnList(task);
+  hiddenNoTaskDiv();
+  addCreateTaskCount();
 
+  input.value = "";
+}
 
-  } else {
-    let tasksMainList = document.querySelectorAll(".tasks-main-form")
-    tasksMainList[i - 1].classList.add("padding-buttom")
-    console.log("Valor Excedido")
+function selectSearchInput() {
+  const input = document.querySelector(".input-search");
+  return input;
+}
+
+function addTaskOnList(task) {
+  const taskList = document.querySelector(".tasks-main-text");
+  taskList.appendChild(task);
+}
+
+// ---------------- Create Task Node ----------------
+function createTaskNode(descripionTask) {
+  const listItem = createListItem();
+
+  const checkbox = createCheckbox();
+  const descriptionTask = createDescriptionTask(descripionTask);
+  const buttonTrash = createButtonTrash();
+
+  listItem.appendChild(checkbox.elemento);
+  listItem.appendChild(descriptionTask.elemento);
+  listItem.appendChild(buttonTrash);
+
+  checkbox.elemento.addEventListener("click", (event) => {
+    const isChecked = event.target.checked;
+    if (isChecked === true) {
+      checkbox.selectCheckbox();
+      descriptionTask.selectedDescriptionTask();
+      addContadorConcluidas();
+    } else if (isChecked === false) {
+      checkbox.unselectCheckbox();
+      descriptionTask.unselectedDescriptionTask();
+      subContadorConcluidas();
     }
+  });
+
+  buttonTrash.addEventListener("click", (event) => {
+    const isChecked = descriptionTask.elemento.classList.contains("through");
+    if (isChecked) {
+      subContadorConcluidas();
+    }
+    listItem.remove();
+    subCreateTaskCount();
+
+    const countCreatedTasks = getCountTasksCrated();
+
+    if (countCreatedTasks === 0) {
+      addNoTaskDiv();
+    }
+  });
+
+  return listItem;
 }
 
-const createbtn = document.querySelector('.btn-search')
-createbtn.addEventListener("click", createNewDiv)
+function createListItem() {
+  const createListItem = document.createElement("li");
+  createListItem.classList.add("tasks-main-form");
+  return createListItem;
+}
 
+function createCheckbox() {
+  const input = document.createElement("input");
+  input.setAttribute("type", "checkbox");
+  input.classList.add("hidden");
 
-const trashBtn = document.querySelectorAll(".btn-trash")
-const tasksMainList = document.querySelectorAll(".tasks-main-form")
-const contadorTarefas = document.querySelector(".task-new-conta")
-const nullTasks = document.querySelector(".no-tasks-section")
-const apareceList = document.querySelectorAll(".aparece")
+  const label = document.createElement("label");
+  label.classList.add("btn-main");
+  label.appendChild(input);
 
-//botão para excluir tarefa
+  const imgUnselected = document.createElement("img");
+  imgUnselected.setAttribute("src", "/Projeto_Lista_Tarefas/Img/btn-not.svg");
+  const imgSelected = document.createElement("img");
+  imgSelected.setAttribute("src", "/Projeto_Lista_Tarefas/Img/btn-select.svg");
+  imgSelected.classList.add("hidden");
 
-trashBtn[0].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[0].classList.add('hidden')
-  tasksMainList[0].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
+  label.appendChild(imgSelected);
+  label.appendChild(imgUnselected);
+
+  function selectCheckbox() {
+    imgSelected.classList.remove("hidden");
+    imgUnselected.classList.add("hidden");
   }
-}
-)
-trashBtn[1].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[1].classList.add('hidden')
-  tasksMainList[1].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
-  }
-}
-)
-trashBtn[2].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[2].classList.add('hidden')
-  tasksMainList[2].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
-  }
-}
-)
-trashBtn[3].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[3].classList.add('hidden')
-  tasksMainList[3].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
-  }
-}
-)
-trashBtn[4].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[4].classList.add('hidden')
-  tasksMainList[4].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
-  }
-}
-)
-trashBtn[5].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[5].classList.add('hidden')
-  tasksMainList[5].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
-  }
-}
-)
-trashBtn[6].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[6].classList.add('hidden')
-  tasksMainList[6].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
-  }
-}
-)
 
-trashBtn[7].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[7].classList.add('hidden')
-  tasksMainList[7].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
+  function unselectCheckbox() {
+    imgSelected.classList.add("hidden");
+    imgUnselected.classList.remove("hidden");
   }
-}
-)
 
-trashBtn[8].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[8].classList.add('hidden')
-  tasksMainList[8].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
+  return {
+    elemento: label,
+    selectCheckbox: selectCheckbox,
+    unselectCheckbox: unselectCheckbox,
+  };
+}
+
+function createDescriptionTask(descripionTask) {
+  const span = document.createElement("span");
+  span.classList.add("main-input-user");
+  span.innerText = descripionTask;
+
+  function selectedDescriptionTask() {
+    span.classList.add("through");
   }
-}
-)
-trashBtn[9].addEventListener("click", (event) =>{
-  event.preventDefault()
-  tasksMainList[9].classList.add('hidden')
-  tasksMainList[9].classList.remove('aparece')
-  let numero = contadorTarefas.textContent
-  let subtra = Number(numero) - 1
-  contadorTarefas.textContent = `${subtra}`
-  i = 0
-  if(subtra == 0){
-    nullTasks.classList.remove("hidden")
-    i = 0
+
+  function unselectedDescriptionTask() {
+    span.classList.remove("through");
   }
-}
-)
 
+  return {
+    elemento: span,
+    selectedDescriptionTask: selectedDescriptionTask,
+    unselectedDescriptionTask: unselectedDescriptionTask,
+  };
+}
 
-const textAreaBox = document.querySelectorAll(".main-input-user")
-const btnMainS = document.querySelectorAll(".selected")
-const btnMainUnselected = document.querySelectorAll(".un")
-const contadorConcluido = document.querySelector(".task-conclude-conta")
+function createButtonTrash() {
+  const button = document.createElement("button");
+  button.classList.add("btn-trash");
+  const imgTrash = document.createElement("img");
+  imgTrash.setAttribute("src", "/Projeto_Lista_Tarefas/Img/trash.svg");
+  button.appendChild(imgTrash);
 
-//Clique no botão deselecionado para selecionar
+  return button;
+}
 
-btnMainUnselected[0].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[0].classList.add("hidden")
-  btnMainS[0].classList.remove("hidden")
-  textAreaBox[0].classList.add("through")
-  btnMainS[0].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[1].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[1].classList.add("hidden")
-  btnMainS[1].classList.remove("hidden")
-  textAreaBox[1].classList.add("through")
-  btnMainS[1].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[2].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[2].classList.add("hidden")
-  btnMainS[2].classList.remove("hidden")
-  textAreaBox[2].classList.add("through")
-  btnMainS[2].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[3].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[3].classList.add("hidden")
-  btnMainS[3].classList.remove("hidden")
-  textAreaBox[3].classList.add("through")
-  btnMainS[3].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[4].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[4].classList.add("hidden")
-  btnMainS[4].classList.remove("hidden")
-  textAreaBox[4].classList.add("through")
-  btnMainS[4].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[5].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[5].classList.add("hidden")
-  btnMainS[5].classList.remove("hidden")
-  textAreaBox[5].classList.add("through")
-  btnMainS[5].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[6].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[6].classList.add("hidden")
-  btnMainS[6].classList.remove("hidden")
-  textAreaBox[6].classList.add("through")
-  btnMainS[6].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[7].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[7].classList.add("hidden")
-  btnMainS[7].classList.remove("hidden")
-  textAreaBox[7].classList.add("through")
-  btnMainS[7].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[8].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[8].classList.add("hidden")
-  btnMainS[8].classList.remove("hidden")
-  textAreaBox[8].classList.add("through")
-  btnMainS[8].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
-btnMainUnselected[9].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[9].classList.add("hidden")
-  btnMainS[9].classList.remove("hidden")
-  textAreaBox[9].classList.add("through")
-  btnMainS[9].classList.add('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-}
-)
+// ---------------- Counters Functions ----------------
 
-//Clique no Botão Selecionado para desselecionar
-btnMainS[0].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[0].classList.remove("hidden")
-  btnMainS[0].classList.add("hidden")
-  textAreaBox[0].classList.remove("through")
-  btnMainS[0].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
+function addCreateTaskCount() {
+  const count = document.querySelector(".task-new-conta");
+  const oldValue = Number(count.innerHTML);
+  count.innerHTML = `${oldValue + 1}`;
+}
 
-btnMainS[1].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[1].classList.remove("hidden")
-  btnMainS[1].classList.add("hidden")
-  textAreaBox[1].classList.remove("through")
-  btnMainS[1].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[2].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[2].classList.remove("hidden")
-  btnMainS[2].classList.add("hidden")
-  textAreaBox[2].classList.remove("through")
-  btnMainS[2].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[3].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[3].classList.remove("hidden")
-  btnMainS[3].classList.add("hidden")
-  textAreaBox[3].classList.remove("through")
-  btnMainS[3].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[4].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[4].classList.remove("hidden")
-  btnMainS[4].classList.add("hidden")
-  textAreaBox[4].classList.remove("through")
-  btnMainS[4].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[5].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[5].classList.remove("hidden")
-  btnMainS[5].classList.add("hidden")
-  textAreaBox[5].classList.remove("through")
-  btnMainS[5].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[6].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[6].classList.remove("hidden")
-  btnMainS[6].classList.add("hidden")
-  textAreaBox[6].classList.remove("through")
-  btnMainS[6].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[7].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[7].classList.remove("hidden")
-  btnMainS[7].classList.add("hidden")
-  textAreaBox[7].classList.remove("through")
-  btnMainS[7].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[8].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[8].classList.remove("hidden")
-  btnMainS[8].classList.add("hidden")
-  textAreaBox[8].classList.remove("through")
-  btnMainS[8].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
-btnMainS[9].addEventListener("click", (event) => {
-  event.preventDefault()
-  btnMainUnselected[9].classList.remove("hidden")
-  btnMainS[9].classList.add("hidden")
-  textAreaBox[9].classList.remove("through")
-  btnMainS[9].classList.remove('contador')
-  let contadorContando = document.querySelectorAll('.contador')
-  contadorConcluido.innerText = `${contadorContando.length}`
-})
+function subCreateTaskCount() {
+  const count = document.querySelector(".task-new-conta");
+  const oldValue = Number(count.innerHTML);
+  count.innerHTML = `${oldValue - 1}`;
+}
+
+function addContadorConcluidas() {
+  const contadorConcluidas = document.querySelector(".task-conclude-conta");
+  const oldValue = Number(contadorConcluidas.innerHTML);
+  contadorConcluidas.innerHTML = `${oldValue + 1}`;
+}
+
+function subContadorConcluidas() {
+  const contadorConcluidas = document.querySelector(".task-conclude-conta");
+  const oldValue = Number(contadorConcluidas.innerHTML);
+  contadorConcluidas.innerHTML = `${oldValue - 1}`;
+}
+
+function getCountTasksCrated() {
+  const count = document.querySelector(".task-new-conta");
+  return Number(count.innerHTML);
+}
+
+// ---------------- No Task Div ----------------
+function addNoTaskDiv() {
+  const noTaskDiv = document.querySelector(".no-tasks-section");
+  noTaskDiv.classList.remove("hidden");
+}
+
+function hiddenNoTaskDiv() {
+  const noTaskDiv = document.querySelector(".no-tasks-section");
+  noTaskDiv.classList.add("hidden");
+}
