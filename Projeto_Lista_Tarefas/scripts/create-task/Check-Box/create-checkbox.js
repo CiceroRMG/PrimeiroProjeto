@@ -8,9 +8,9 @@ export function createCheckbox() {
   label.appendChild(input);
 
   const imgUnselected = document.createElement("img");
-  imgUnselected.setAttribute("src", "/Img/btn-not.svg");
+  imgUnselected.setAttribute("src", "Img/btn-not.svg");
   const imgSelected = document.createElement("img");
-  imgSelected.setAttribute("src", "/Img/btn-select.svg");
+  imgSelected.setAttribute("src", "Img/btn-select.svg");
   imgSelected.classList.add("hidden");
 
   label.appendChild(imgSelected);
