@@ -5,3 +5,5 @@
 <p>Funcionalidades</p>
 <p>- Adicionar tarefas pelo Input do usuário</p>
 <p>- Remover tarefas separadamente</p>
+<p>- Contador de tarefas criadas e concluídas</p>
+<p>- Selecionar/desselecionar as tarefas</p>
